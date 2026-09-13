@@ -26,30 +26,49 @@ class AviatorPredictor {
 
         // Hide previous result and fly the plane while analyzing
         document.getElementById('predictionResult').classList.add('hidden');
-        this.startFlight(parseFloat(prediction.predictedMultiplier), flightDuration);
+        this.startFlight(
+            parseFloat(prediction.predictedMultiplier),
+            flightDuration,
+            prediction.confidence >= 90
+        );
 
         setTimeout(() => {
             this.displayPrediction(prediction);
         }, flightDuration);
     }
 
-    startFlight(targetMultiplier, duration) {
+    startFlight(targetMultiplier, duration, highConfidence) {
         const plane = document.getElementById('plane');
         const flightMultiplier = document.getElementById('flightMultiplier');
         const flightStatus = document.getElementById('flightStatus');
 
-        // Reset the plane to the start of the runway
-        plane.classList.remove('flying');
-        void plane.offsetWidth; // force reflow to restart the animation
+        // Park the plane at the start of the runway, disable the idle hover
+        plane.style.animation = 'none';
+        plane.style.left = '4%';
+        plane.style.bottom = '6%';
+        plane.style.transform = 'rotate(-8deg)';
         flightMultiplier.textContent = '1.00';
+        flightMultiplier.classList.toggle('green', highConfidence);
         flightStatus.textContent = 'Analyzing market data...';
-        plane.classList.add('flying');
 
         const start = performance.now();
         const tick = (now) => {
             const t = Math.min(1, (now - start) / duration);
-            const value = 1 + (targetMultiplier - 1) * Math.pow(t, 2.2);
+            // Realistic takeoff: slow taxi first, then an accelerating climb.
+            // The same eased progress drives the multiplier countdown, so the
+            // plane position and the counter stay perfectly in sync.
+            const p = Math.pow(t, 2.2);
+
+            const x = 4 + 89 * p;                                  // ground run then climb along the path
+            const y = 6 + 80 * Math.pow(p, 1.5);                    // lift-off curve steepens as speed builds
+            const rot = -8 - 30 * Math.min(1, p * 1.6);            // pitch up after rotation speed
+            plane.style.left = x + '%';
+            plane.style.bottom = y + '%';
+            plane.style.transform = `rotate(${rot}deg)`;
+
+            const value = 1 + (targetMultiplier - 1) * p;
             flightMultiplier.textContent = value.toFixed(2);
+
             if (t < 1) {
                 requestAnimationFrame(tick);
             } else {
@@ -271,6 +290,7 @@ class AviatorPredictor {
 
         // Update multiplier
         predictedMultiplier.textContent = prediction.predictedMultiplier + 'x';
+        predictedMultiplier.classList.toggle('green', prediction.confidence >= 90);
         const predicted = parseFloat(prediction.predictedMultiplier);
         const margin = Math.max(0.3, predicted * 0.12);
         const range = `Range: ${(predicted - margin).toFixed(2)}x - ${(predicted + margin).toFixed(2)}x`;

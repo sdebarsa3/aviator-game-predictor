@@ -208,10 +208,11 @@ body {
     position: relative;
     width: 100%;
     height: clamp(90px, 20vh, 160px);
-    background: linear-gradient(180deg, #ffffff 0%, var(--bg-soft) 100%);
+    background-color: #0a0a0a;
     background-image:
-        repeating-linear-gradient(0deg, rgba(217, 4, 41, 0.05) 0 1px, transparent 1px 26px),
-        repeating-linear-gradient(90deg, rgba(217, 4, 41, 0.05) 0 1px, transparent 1px 26px);
+        linear-gradient(180deg, rgba(28, 28, 28, 0.9) 0%, rgba(28, 28, 28, 0.4) 100%),
+        repeating-linear-gradient(0deg, rgba(217, 4, 41, 0.12) 0 1px, transparent 1px 26px),
+        repeating-linear-gradient(90deg, rgba(217, 4, 41, 0.12) 0 1px, transparent 1px 26px);
     border: 2px solid var(--accent-color);
     border-radius: 10px;
     overflow: hidden;
@@ -238,20 +239,8 @@ body {
 }
 
 @keyframes hover {
-    0%, 100% { transform: rotate(-10deg) translateY(0); }
-    50% { transform: rotate(-13deg) translateY(-6px); }
-}
-
-.plane.flying {
-    animation: fly 3s cubic-bezier(0.45, 0.05, 0.7, 1) forwards;
-}
-
-@keyframes fly {
-    0%   { left: 4%;  bottom: 6%;  transform: rotate(-10deg); }
-    30%  { left: 32%; bottom: 14%; transform: rotate(-14deg); }
-    60%  { left: 62%; bottom: 42%; transform: rotate(-26deg); }
-    85%  { left: 84%; bottom: 70%; transform: rotate(-33deg); }
-    100% { left: 93%; bottom: 86%; transform: rotate(-37deg); }
+    0%, 100% { transform: rotate(-8deg) translateY(0); }
+    50% { transform: rotate(-11deg) translateY(-5px); }
 }
 
 .flight-multiplier {
@@ -260,8 +249,13 @@ body {
     left: 12px;
     font-size: clamp(1.2em, 4vw, 2em);
     font-weight: bold;
-    color: var(--accent-color);
-    text-shadow: 0 1px 3px rgba(217, 4, 41, 0.25);
+    color: #ff2d3f;
+    text-shadow: 0 0 6px rgba(255, 45, 63, 0.55);
+}
+
+.flight-multiplier.green {
+    color: #00e676;
+    text-shadow: 0 0 6px rgba(0, 230, 118, 0.55);
 }
 
 .flight-status {
@@ -269,8 +263,12 @@ body {
     bottom: 6px;
     right: 10px;
     font-size: 0.7em;
-    color: var(--text-secondary);
+    color: #d0d0d0;
     font-weight: 600;
+}
+
+#predictedMultiplier.green {
+    color: #00e676;
 }
 
 /* Prediction Result */
