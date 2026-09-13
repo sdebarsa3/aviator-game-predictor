@@ -494,6 +494,87 @@ tbody tr:last-child td {
     font-weight: bold;
 }
 
+/* Performance Dashboard */
+.dashboard-section {
+    margin-bottom: 40px;
+}
+
+.dashboard-section h2 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    color: var(--text-primary);
+}
+
+.dashboard-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.dash-stat-card {
+    background: var(--bg-card);
+    border: 2px solid var(--accent-color);
+    border-radius: 10px;
+    padding: 18px 12px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(233, 69, 96, 0.15);
+}
+
+.dash-stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(233, 69, 96, 0.35);
+}
+
+.dash-stat-card h3 {
+    color: var(--text-secondary);
+    font-size: 0.75em;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.dash-stat-value {
+    font-size: 1.8em;
+    font-weight: bold;
+    text-shadow: 0 0 8px currentColor;
+}
+
+.dashboard-charts {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.chart-card {
+    background: var(--bg-card);
+    border: 2px solid var(--accent-color);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(233, 69, 96, 0.15);
+}
+
+.chart-card h3 {
+    color: var(--success-color);
+    font-size: 1em;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.chart-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+@media (min-width: 769px) {
+    .dashboard-charts {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
 /* Footer */
 .footer {
     margin-top: 60px;

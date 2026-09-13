@@ -337,6 +337,10 @@ class AviatorPredictor {
             ? Math.round((accurateCount / roundsAnalyzed) * 100) + '%'
             : '0%';
         document.getElementById('avgConfidence').textContent = avgConfidence + '%';
+
+        if (window.dashboard) {
+            window.dashboard.update(this.predictionHistory);
+        }
     }
 
     showLoadingState() {

@@ -33,6 +33,28 @@
                 </div>
             </section>
 
+            <!-- Performance Dashboard -->
+            <section class="dashboard-section">
+                <h2>Performance Dashboard</h2>
+                <div id="dashboardSummary" class="dashboard-summary">
+                    <!-- Summary stats populated by dashboard.js -->
+                </div>
+                <div class="dashboard-charts">
+                    <div class="chart-card">
+                        <h3>Multiplier Trends</h3>
+                        <svg id="trendChart" viewBox="0 0 300 150" preserveAspectRatio="xMidYMid meet" class="chart-svg"></svg>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Risk Distribution</h3>
+                        <svg id="riskChart" viewBox="0 0 280 150" preserveAspectRatio="xMidYMid meet" class="chart-svg"></svg>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Confidence Over Time</h3>
+                        <svg id="confidenceChart" viewBox="0 0 300 150" preserveAspectRatio="xMidYMid meet" class="chart-svg"></svg>
+                    </div>
+                </div>
+            </section>
+
             <!-- Prediction Panel -->
             <section class="prediction-panel">
                 <div class="panel-header">
@@ -160,6 +182,7 @@
         </footer>
     </div>
 
+    <script src="dashboard.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
