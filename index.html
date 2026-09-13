@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aviator Predictor - Hollywood Bets</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo-section">
+                <img src="logo.png" alt="Hollywood Bets Logo" class="logo">
+                <h1>Aviator Predictor</h1>
+                <p class="subtitle">Next Round Outcome Prediction System</p>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Statistics Dashboard -->
+            <section class="stats-dashboard">
+                <div class="stat-card">
+                    <h3>Last Rounds Analyzed</h3>
+                    <p class="stat-value" id="roundsAnalyzed">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Accuracy Rate</h3>
+                    <p class="stat-value" id="accuracyRate">0%</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Average Confidence</h3>
+                    <p class="stat-value" id="avgConfidence">0%</p>
+                </div>
+            </section>
+
+            <!-- Prediction Panel -->
+            <section class="prediction-panel">
+                <div class="panel-header">
+                    <h2>Next Round Prediction</h2>
+                    <button id="predictBtn" class="predict-button">ANALYZE & PREDICT</button>
+                </div>
+
+                <!-- Input Section -->
+                <div class="input-section">
+                    <div class="input-group">
+                        <label for="lastRounds">Last 5 Rounds Multipliers (comma-separated):</label>
+                        <input 
+                            type="text" 
+                            id="lastRounds" 
+                            placeholder="e.g., 1.2, 1.8, 2.3, 1.5, 2.1"
+                            class="input-field"
+                        >
+                    </div>
+                    <div class="input-group">
+                        <label for="timeOfDay">Time of Day:</label>
+                        <select id="timeOfDay" class="input-field">
+                            <option value="morning">Morning (6AM - 12PM)</option>
+                            <option value="afternoon">Afternoon (12PM - 6PM)</option>
+                            <option value="evening">Evening (6PM - 12AM)</option>
+                            <option value="night">Night (12AM - 6AM)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Prediction Result -->
+                <div id="predictionResult" class="prediction-result hidden">
+                    <div class="result-header">
+                        <h3>Prediction for Next Round</h3>
+                    </div>
+
+                    <div class="prediction-metrics">
+                        <!-- Confidence Score -->
+                        <div class="metric-card confidence-card">
+                            <div class="metric-label">Confidence Level</div>
+                            <div class="metric-value">
+                                <span id="confidenceScore">0</span>%
+                            </div>
+                            <div class="confidence-bar">
+                                <div id="confidenceBar" class="confidence-fill"></div>
+                            </div>
+                            <p id="confidenceText" class="metric-description">High Confidence</p>
+                        </div>
+
+                        <!-- Risk Level -->
+                        <div class="metric-card risk-card">
+                            <div class="metric-label">Risk Level</div>
+                            <div class="metric-value">
+                                <span id="riskLevel">MEDIUM</span>
+                            </div>
+                            <div class="risk-gauge">
+                                <div id="riskGauge" class="risk-indicator"></div>
+                            </div>
+                            <p id="riskText" class="metric-description">Moderate risk detected</p>
+                        </div>
+
+                        <!-- Predicted Outcome -->
+                        <div class="metric-card outcome-card">
+                            <div class="metric-label">Predicted Outcome</div>
+                            <div class="metric-value">
+                                <span id="predictedMultiplier">0.00x</span>
+                            </div>
+                            <div class="outcome-range">
+                                <p id="outcomeRange">Range: 1.2x - 3.5x</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Analysis -->
+                    <div class="analysis-section">
+                        <h4>Detailed Analysis</h4>
+                        <div id="analysisDetails" class="analysis-content">
+                            <!-- Details populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Recommendation -->
+                    <div id="recommendationBox" class="recommendation-box">
+                        <div class="recommendation-header">
+                            <span class="recommendation-label">Recommendation</span>
+                        </div>
+                        <p id="recommendationText" class="recommendation-content">
+                            <!-- Recommendation populated by JavaScript -->
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Loading State -->
+                <div id="loadingState" class="loading-state hidden">
+                    <div class="spinner"></div>
+                    <p>Analyzing market data...</p>
+                </div>
+            </section>
+
+            <!-- History Section -->
+            <section class="history-section">
+                <h2>Prediction History</h2>
+                <div id="historyTable" class="history-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Round #</th>
+                                <th>Prediction</th>
+                                <th>Confidence</th>
+                                <th>Risk</th>
+                                <th>Actual Result</th>
+                                <th>Accuracy</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyBody">
+                            <!-- History rows populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>Disclaimer: This predictor is for entertainment purposes only. Aviator is a game of chance. Always play responsibly.</p>
+            <p>&copy; 2026 Hollywood Bets. All rights reserved. | www.hollywoodbets.net</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
