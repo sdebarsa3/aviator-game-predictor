@@ -17,6 +17,14 @@
         </header>
 
         <main class="main-content">
+            <!-- Tab Navigation -->
+            <nav class="tab-nav">
+                <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
+                <button class="tab-btn" data-tab="predict">Predict</button>
+                <button class="tab-btn" data-tab="history">History</button>
+            </nav>
+
+            <div id="tab-dashboard" class="tab-content active">
             <!-- Statistics Dashboard -->
             <section class="stats-dashboard">
                 <div class="stat-card">
@@ -33,33 +41,35 @@
                 </div>
             </section>
 
+            <!-- Performance Dashboard -->
+            <section class="dashboard-section">
+                <h2>Performance Dashboard</h2>
+                <div id="dashboardSummary" class="dashboard-summary">
+                    <!-- Summary stats populated by dashboard.js -->
+                </div>
+                <div class="dashboard-charts">
+                    <div class="chart-card">
+                        <h3>Multiplier Trends</h3>
+                        <svg id="trendChart" viewBox="0 0 300 150" preserveAspectRatio="xMidYMid meet" class="chart-svg"></svg>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Risk Distribution</h3>
+                        <svg id="riskChart" viewBox="0 0 280 150" preserveAspectRatio="xMidYMid meet" class="chart-svg"></svg>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Confidence Over Time</h3>
+                        <svg id="confidenceChart" viewBox="0 0 300 150" preserveAspectRatio="xMidYMid meet" class="chart-svg"></svg>
+                    </div>
+                </div>
+            </section>
+            </div><!-- /tab-dashboard -->
+
+            <div id="tab-predict" class="tab-content">
             <!-- Prediction Panel -->
             <section class="prediction-panel">
                 <div class="panel-header">
                     <h2>Next Round Prediction</h2>
-                    <button id="predictBtn" class="predict-button">ANALYZE & PREDICT</button>
-                </div>
-
-                <!-- Input Section -->
-                <div class="input-section">
-                    <div class="input-group">
-                        <label for="lastRounds">Last 5 Rounds Multipliers (comma-separated):</label>
-                        <input 
-                            type="text" 
-                            id="lastRounds" 
-                            placeholder="e.g., 1.2, 1.8, 2.3, 1.5, 2.1"
-                            class="input-field"
-                        >
-                    </div>
-                    <div class="input-group">
-                        <label for="timeOfDay">Time of Day:</label>
-                        <select id="timeOfDay" class="input-field">
-                            <option value="morning">Morning (6AM - 12PM)</option>
-                            <option value="afternoon">Afternoon (12PM - 6PM)</option>
-                            <option value="evening">Evening (6PM - 12AM)</option>
-                            <option value="night">Night (12AM - 6AM)</option>
-                        </select>
-                    </div>
+                    <button id="predictBtn" class="predict-button">GENERATE SIGNAL</button>
                 </div>
 
                 <!-- Prediction Result -->
@@ -105,14 +115,6 @@
                         </div>
                     </div>
 
-                    <!-- Detailed Analysis -->
-                    <div class="analysis-section">
-                        <h4>Detailed Analysis</h4>
-                        <div id="analysisDetails" class="analysis-content">
-                            <!-- Details populated by JavaScript -->
-                        </div>
-                    </div>
-
                     <!-- Recommendation -->
                     <div id="recommendationBox" class="recommendation-box">
                         <div class="recommendation-header">
@@ -130,7 +132,9 @@
                     <p>Analyzing market data...</p>
                 </div>
             </section>
+            </div><!-- /tab-predict -->
 
+            <div id="tab-history" class="tab-content">
             <!-- History Section -->
             <section class="history-section">
                 <h2>Prediction History</h2>
@@ -152,6 +156,7 @@
                     </table>
                 </div>
             </section>
+            </div><!-- /tab-history -->
         </main>
 
         <footer class="footer">
@@ -160,6 +165,7 @@
         </footer>
     </div>
 
+    <script src="dashboard.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

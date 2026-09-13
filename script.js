@@ -15,29 +15,26 @@ class AviatorPredictor {
     attachEventListeners() {
         const predictBtn = document.getElementById('predictBtn');
         predictBtn.addEventListener('click', () => this.generatePrediction());
+
+        // Tab switching
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+            });
+        });
     }
 
     generatePrediction() {
-        const lastRoundsInput = document.getElementById('lastRounds').value;
-        const timeOfDay = document.getElementById('timeOfDay').value;
-
-        if (!lastRoundsInput.trim()) {
-            alert('Please enter the last 5 rounds multipliers');
-            return;
-        }
-
         // Show loading state
         this.showLoadingState();
 
-        // Simulate API call with setTimeout
+        // Auto-generate signal from simulated round data
         setTimeout(() => {
-            const rounds = this.parseRounds(lastRoundsInput);
-            
-            if (rounds.length < 3) {
-                alert('Please enter at least 3 previous round multipliers');
-                this.hideLoadingState();
-                return;
-            }
+            const rounds = this.generateRandomRounds();
+            const timeOfDay = this.getCurrentTimeOfDay();
 
             const prediction = this.calculatePrediction(rounds, timeOfDay);
             this.displayPrediction(prediction);
@@ -45,11 +42,18 @@ class AviatorPredictor {
         }, 1500);
     }
 
-    parseRounds(input) {
-        return input
-            .split(',')
-            .map(val => parseFloat(val.trim()))
-            .filter(val => !isNaN(val) && val > 0);
+    generateRandomRounds() {
+        return Array.from({ length: 5 }, () =>
+            parseFloat((Math.random() * 3 + 1).toFixed(2))
+        );
+    }
+
+    getCurrentTimeOfDay() {
+        const hour = new Date().getHours();
+        if (hour >= 6 && hour < 12) return 'morning';
+        if (hour >= 12 && hour < 18) return 'afternoon';
+        if (hour >= 18) return 'evening';
+        return 'night';
     }
 
     calculatePrediction(rounds, timeOfDay) {
@@ -236,15 +240,17 @@ class AviatorPredictor {
         const range = `Range: ${(parseFloat(prediction.predictedMultiplier) - 0.5).toFixed(2)}x - ${(parseFloat(prediction.predictedMultiplier) + 0.8).toFixed(2)}x`;
         outcomeRange.textContent = range;
 
-        // Update analysis
-        analysisDetails.innerHTML = '';
-        for (const [key, value] of Object.entries(prediction.analysis)) {
-            analysisDetails.innerHTML += `
-                <div class="analysis-item">
-                    <div class="analysis-item-title">${key}</div>
-                    <div class="analysis-item-value">${value}</div>
-                </div>
-            `;
+        // Update analysis (section removed from UI, skip if element not present)
+        if (analysisDetails) {
+            analysisDetails.innerHTML = '';
+            for (const [key, value] of Object.entries(prediction.analysis)) {
+                analysisDetails.innerHTML += `
+                    <div class="analysis-item">
+                        <div class="analysis-item-title">${key}</div>
+                        <div class="analysis-item-value">${value}</div>
+                    </div>
+                `;
+            }
         }
 
         // Update recommendation
@@ -337,6 +343,10 @@ class AviatorPredictor {
             ? Math.round((accurateCount / roundsAnalyzed) * 100) + '%'
             : '0%';
         document.getElementById('avgConfidence').textContent = avgConfidence + '%';
+
+        if (window.dashboard) {
+            window.dashboard.update(this.predictionHistory);
+        }
     }
 
     showLoadingState() {
