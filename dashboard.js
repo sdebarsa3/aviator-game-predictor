@@ -2,7 +2,7 @@
 class DashboardRenderer {
     constructor() {
         this.colors = {
-            accent: '#e94560',
+            accent: '#00b894',
             success: '#00d4ff',
             warning: '#ffa500',
             danger: '#ff4757',
