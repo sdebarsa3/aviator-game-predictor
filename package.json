@@ -30,5 +30,8 @@
   "homepage": "https://github.com/sdebarsa3/aviator-game-predictor#readme",
   "engines": {
     "node": ">=14.0.0"
+  },
+  "dependencies": {
+    "vite": "^8.3.0"
   }
 }
