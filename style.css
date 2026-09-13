@@ -494,6 +494,44 @@ tbody tr:last-child td {
     font-weight: bold;
 }
 
+/* Tab Navigation */
+.tab-nav {
+    display: flex;
+    gap: 0;
+    margin-bottom: 20px;
+    background: var(--bg-card);
+    border: 2px solid var(--accent-color);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 12px 8px;
+    background: transparent;
+    color: var(--text-secondary);
+    border: none;
+    font-size: 0.9em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tab-btn.active {
+    background: linear-gradient(135deg, var(--accent-color), #ff6b7a);
+    color: white;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
 /* Performance Dashboard */
 .dashboard-section {
     margin-bottom: 40px;
@@ -597,8 +635,90 @@ tbody tr:last-child td {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .header {
+        padding: 20px 15px;
+        margin-bottom: 15px;
+    }
+
     .header h1 {
-        font-size: 2em;
+        font-size: 1.6em;
+    }
+
+    .subtitle {
+        font-size: 0.85em;
+        margin-top: 5px;
+    }
+
+    .logo {
+        width: 50px;
+        height: 50px;
+    }
+
+    .logo-section {
+        gap: 12px;
+    }
+
+    .stats-dashboard {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin-bottom: 15px;
+    }
+
+    .stat-card {
+        padding: 10px 6px;
+    }
+
+    .stat-card h3 {
+        font-size: 0.6em;
+        margin-bottom: 6px;
+        letter-spacing: 0.3px;
+    }
+
+    .stat-value {
+        font-size: 1.4em;
+    }
+
+    .dashboard-section h2 {
+        font-size: 1.3em;
+        margin-bottom: 12px;
+    }
+
+    .dashboard-summary {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        margin-bottom: 15px;
+    }
+
+    .dash-stat-card {
+        padding: 10px 6px;
+    }
+
+    .dash-stat-card h3 {
+        font-size: 0.6em;
+        margin-bottom: 6px;
+    }
+
+    .dash-stat-value {
+        font-size: 1.3em;
+    }
+
+    .dashboard-charts {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        gap: 0;
+    }
+
+    .chart-card {
+        min-width: 100%;
+        scroll-snap-align: start;
+        padding: 12px;
+    }
+
+    .chart-card h3 {
+        font-size: 0.8em;
+        margin-bottom: 8px;
     }
 
     .panel-header {
@@ -622,16 +742,21 @@ tbody tr:last-child td {
         font-size: 2em;
     }
 
-    .stats-dashboard {
-        grid-template-columns: 1fr;
-    }
-
     table {
         font-size: 0.85em;
     }
 
     th, td {
         padding: 10px;
+    }
+
+    .footer {
+        padding: 15px 10px;
+        margin-top: 20px;
+    }
+
+    .footer p {
+        font-size: 0.75em;
     }
 }
 

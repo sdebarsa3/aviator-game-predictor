@@ -17,6 +17,14 @@
         </header>
 
         <main class="main-content">
+            <!-- Tab Navigation -->
+            <nav class="tab-nav">
+                <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
+                <button class="tab-btn" data-tab="predict">Predict</button>
+                <button class="tab-btn" data-tab="history">History</button>
+            </nav>
+
+            <div id="tab-dashboard" class="tab-content active">
             <!-- Statistics Dashboard -->
             <section class="stats-dashboard">
                 <div class="stat-card">
@@ -54,7 +62,9 @@
                     </div>
                 </div>
             </section>
+            </div><!-- /tab-dashboard -->
 
+            <div id="tab-predict" class="tab-content">
             <!-- Prediction Panel -->
             <section class="prediction-panel">
                 <div class="panel-header">
@@ -152,7 +162,9 @@
                     <p>Analyzing market data...</p>
                 </div>
             </section>
+            </div><!-- /tab-predict -->
 
+            <div id="tab-history" class="tab-content">
             <!-- History Section -->
             <section class="history-section">
                 <h2>Prediction History</h2>
@@ -174,6 +186,7 @@
                     </table>
                 </div>
             </section>
+            </div><!-- /tab-history -->
         </main>
 
         <footer class="footer">
