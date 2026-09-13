@@ -40,7 +40,7 @@
             <section class="prediction-panel">
                 <div class="panel-header">
                     <h2>Next Round Prediction</h2>
-                    <button id="predictBtn" class="predict-button">ANALYZE &amp; PREDICT</button>
+                    <button id="predictBtn" class="predict-button">GENERATE SIGNAL</button>
                 </div>
 
                 <!-- Aviator Flight Animation -->
@@ -53,28 +53,6 @@
                     </svg>
                     <div class="flight-multiplier"><span id="flightMultiplier">1.00</span>x</div>
                     <div class="flight-status" id="flightStatus">Ready for takeoff</div>
-                </div>
-
-                <!-- Input Section -->
-                <div class="input-section">
-                    <div class="input-group">
-                        <label for="lastRounds">Last 5 Rounds Multipliers (comma-separated):</label>
-                        <input 
-                            type="text" 
-                            id="lastRounds" 
-                            placeholder="e.g., 1.2, 1.8, 2.3, 1.5, 2.1"
-                            class="input-field"
-                        >
-                    </div>
-                    <div class="input-group">
-                        <label for="timeOfDay">Time of Day:</label>
-                        <select id="timeOfDay" class="input-field">
-                            <option value="morning">Morning (6AM - 12PM)</option>
-                            <option value="afternoon">Afternoon (12PM - 6PM)</option>
-                            <option value="evening">Evening (6PM - 12AM)</option>
-                            <option value="night">Night (12AM - 6AM)</option>
-                        </select>
-                    </div>
                 </div>
 
                 <!-- Prediction Result -->

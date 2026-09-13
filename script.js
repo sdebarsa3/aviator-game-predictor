@@ -18,20 +18,8 @@ class AviatorPredictor {
     }
 
     generatePrediction() {
-        const lastRoundsInput = document.getElementById('lastRounds').value;
-        const timeOfDay = document.getElementById('timeOfDay').value;
-
-        if (!lastRoundsInput.trim()) {
-            alert('Please enter the last 5 rounds multipliers');
-            return;
-        }
-
-        const rounds = this.parseRounds(lastRoundsInput);
-
-        if (rounds.length < 3) {
-            alert('Please enter at least 3 previous round multipliers');
-            return;
-        }
+        const rounds = this.generateSignalRounds();
+        const timeOfDay = this.getCurrentTimeOfDay();
 
         const prediction = this.calculatePrediction(rounds, timeOfDay);
         const flightDuration = 3000;
@@ -72,11 +60,22 @@ class AviatorPredictor {
         requestAnimationFrame(tick);
     }
 
-    parseRounds(input) {
-        return input
-            .split(',')
-            .map(val => parseFloat(val.trim()))
-            .filter(val => !isNaN(val) && val > 0);
+    generateSignalRounds() {
+        // Simulate the most recent aviator rounds with a realistic skewed
+        // distribution: mostly low multipliers, occasional big ones (1.00x - 14.00x)
+        const rounds = [];
+        for (let i = 0; i < 5; i++) {
+            rounds.push(+(1 + Math.pow(Math.random(), 3) * 13).toFixed(2));
+        }
+        return rounds;
+    }
+
+    getCurrentTimeOfDay() {
+        const hour = new Date().getHours();
+        if (hour >= 6 && hour < 12) return 'morning';
+        if (hour >= 12 && hour < 18) return 'afternoon';
+        if (hour >= 18) return 'evening';
+        return 'night';
     }
 
     calculatePrediction(rounds, timeOfDay) {
