@@ -10,10 +10,13 @@
     <div class="container">
         <header class="header">
             <div class="logo-section">
-                <img src="logo.png" alt="Hollywood Bets Logo" class="logo">
+                <svg class="logo" viewBox="0 0 24 24" aria-label="Hollywood Bets plane logo">
+                    <path d="M2 3 L22 12 L2 21 L2 13 L14 12 L2 11 Z" fill="#d90429"/>
+                </svg>
                 <h1>Aviator Predictor</h1>
-                <p class="subtitle">Next Round Outcome Prediction System</p>
             </div>
+            <p class="subtitle">Next Round Outcome Prediction System</p>
+            <p class="brand-domain"><a href="https://www.hollywoodbets.net" target="_blank" rel="noopener">www.hollywoodbets.net</a></p>
         </header>
 
         <main class="main-content">
@@ -37,7 +40,19 @@
             <section class="prediction-panel">
                 <div class="panel-header">
                     <h2>Next Round Prediction</h2>
-                    <button id="predictBtn" class="predict-button">ANALYZE & PREDICT</button>
+                    <button id="predictBtn" class="predict-button">ANALYZE &amp; PREDICT</button>
+                </div>
+
+                <!-- Aviator Flight Animation -->
+                <div class="flight-screen">
+                    <svg class="flight-curve" viewBox="0 0 100 50" preserveAspectRatio="none" aria-hidden="true">
+                        <path d="M4 47 C 30 47 55 34 78 15 L 93 7" fill="none" stroke="#d90429" stroke-width="0.7" stroke-dasharray="2 1.5" opacity="0.45"/>
+                    </svg>
+                    <svg class="plane" id="plane" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M2 3 L22 12 L2 21 L2 13 L14 12 L2 11 Z" fill="#d90429"/>
+                    </svg>
+                    <div class="flight-multiplier"><span id="flightMultiplier">1.00</span>x</div>
+                    <div class="flight-status" id="flightStatus">Ready for takeoff</div>
                 </div>
 
                 <!-- Input Section -->
@@ -123,12 +138,6 @@
                         </p>
                     </div>
                 </div>
-
-                <!-- Loading State -->
-                <div id="loadingState" class="loading-state hidden">
-                    <div class="spinner"></div>
-                    <p>Analyzing market data...</p>
-                </div>
             </section>
 
             <!-- History Section -->
@@ -156,7 +165,7 @@
 
         <footer class="footer">
             <p>Disclaimer: This predictor is for entertainment purposes only. Aviator is a game of chance. Always play responsibly.</p>
-            <p>&copy; 2026 Hollywood Bets. All rights reserved. | www.hollywoodbets.net</p>
+            <p>&copy; 2026 Hollywood Bets. All rights reserved. | <a href="https://www.hollywoodbets.net" target="_blank" rel="noopener" style="color: #d90429; font-weight: bold; text-decoration: none;">www.hollywoodbets.net</a></p>
         </footer>
     </div>
 

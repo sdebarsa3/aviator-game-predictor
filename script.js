@@ -26,23 +26,50 @@ class AviatorPredictor {
             return;
         }
 
-        // Show loading state
-        this.showLoadingState();
+        const rounds = this.parseRounds(lastRoundsInput);
 
-        // Simulate API call with setTimeout
+        if (rounds.length < 3) {
+            alert('Please enter at least 3 previous round multipliers');
+            return;
+        }
+
+        const prediction = this.calculatePrediction(rounds, timeOfDay);
+        const flightDuration = 3000;
+
+        // Hide previous result and fly the plane while analyzing
+        document.getElementById('predictionResult').classList.add('hidden');
+        this.startFlight(parseFloat(prediction.predictedMultiplier), flightDuration);
+
         setTimeout(() => {
-            const rounds = this.parseRounds(lastRoundsInput);
-            
-            if (rounds.length < 3) {
-                alert('Please enter at least 3 previous round multipliers');
-                this.hideLoadingState();
-                return;
-            }
-
-            const prediction = this.calculatePrediction(rounds, timeOfDay);
             this.displayPrediction(prediction);
-            this.hideLoadingState();
-        }, 1500);
+        }, flightDuration);
+    }
+
+    startFlight(targetMultiplier, duration) {
+        const plane = document.getElementById('plane');
+        const flightMultiplier = document.getElementById('flightMultiplier');
+        const flightStatus = document.getElementById('flightStatus');
+
+        // Reset the plane to the start of the runway
+        plane.classList.remove('flying');
+        void plane.offsetWidth; // force reflow to restart the animation
+        flightMultiplier.textContent = '1.00';
+        flightStatus.textContent = 'Analyzing market data...';
+        plane.classList.add('flying');
+
+        const start = performance.now();
+        const tick = (now) => {
+            const t = Math.min(1, (now - start) / duration);
+            const value = 1 + (targetMultiplier - 1) * Math.pow(t, 2.2);
+            flightMultiplier.textContent = value.toFixed(2);
+            if (t < 1) {
+                requestAnimationFrame(tick);
+            } else {
+                flightMultiplier.textContent = targetMultiplier.toFixed(2);
+                flightStatus.textContent = `Predicted: ${targetMultiplier.toFixed(2)}x — see results below`;
+            }
+        };
+        requestAnimationFrame(tick);
     }
 
     parseRounds(input) {
@@ -70,9 +97,19 @@ class AviatorPredictor {
 
         // 5. Predict next multiplier
         let predictedMultiplier = average + (recentTrend * 0.15) + (timeMultiplier * 0.1);
-        
-        // Ensure realistic bounds (1.0x to 5.0x for aviator)
-        predictedMultiplier = Math.max(1.1, Math.min(4.5, predictedMultiplier));
+
+        // Momentum boost: strong upward trend projects higher outcomes
+        const maxRound = Math.max(...rounds);
+        if (recentTrend > 0) {
+            predictedMultiplier += recentTrend * (maxRound / average) * 0.9;
+        }
+        // A big multiplier in recent history signals a high-potential stretch
+        if (maxRound >= 10) {
+            predictedMultiplier += maxRound * 0.35;
+        }
+
+        // Ensure realistic bounds (1.0x to 15.0x for aviator)
+        predictedMultiplier = Math.max(1.1, Math.min(15.0, predictedMultiplier));
 
         // 6. Calculate confidence based on consistency
         const confidence = this.calculateConfidence(rounds, volatility, average);
@@ -138,10 +175,12 @@ class AviatorPredictor {
         let riskScore = volatility * 20; // Base risk from volatility
         
         // Risk from predicted multiplier extremes
-        if (predictedMultiplier > 3.5) {
-            riskScore += 25;
-        } else if (predictedMultiplier > 2.5) {
-            riskScore += 15;
+        if (predictedMultiplier > 10) {
+            riskScore += 30;
+        } else if (predictedMultiplier > 5) {
+            riskScore += 20;
+        } else if (predictedMultiplier > 3.5) {
+            riskScore += 10;
         }
 
         // Risk from crashes (very low multipliers in history)
@@ -233,7 +272,9 @@ class AviatorPredictor {
 
         // Update multiplier
         predictedMultiplier.textContent = prediction.predictedMultiplier + 'x';
-        const range = `Range: ${(parseFloat(prediction.predictedMultiplier) - 0.5).toFixed(2)}x - ${(parseFloat(prediction.predictedMultiplier) + 0.8).toFixed(2)}x`;
+        const predicted = parseFloat(prediction.predictedMultiplier);
+        const margin = Math.max(0.3, predicted * 0.12);
+        const range = `Range: ${(predicted - margin).toFixed(2)}x - ${(predicted + margin).toFixed(2)}x`;
         outcomeRange.textContent = range;
 
         // Update analysis
@@ -269,11 +310,11 @@ class AviatorPredictor {
 
     getRiskColor(riskLevel) {
         const colors = {
-            'LOW': '#00d4ff',
-            'MEDIUM': '#ffa500',
-            'HIGH': '#ff4757'
+            'LOW': '#2e7d32',
+            'MEDIUM': '#e08a00',
+            'HIGH': '#d90429'
         };
-        return colors[riskLevel] || '#ffa500';
+        return colors[riskLevel] || '#e08a00';
     }
 
     updateRecommendationStyle(confidence, riskLevel) {
@@ -282,9 +323,9 @@ class AviatorPredictor {
         
         // Update text color based on recommendation strength
         if (confidence > 80 && riskLevel === 'LOW') {
-            box.style.borderColor = '#00d4ff';
+            box.style.borderColor = '#2e7d32';
         } else if (confidence < 50 || riskLevel === 'HIGH') {
-            box.style.borderColor = '#ff4757';
+            box.style.borderColor = '#d90429';
         }
     }
 
@@ -337,15 +378,6 @@ class AviatorPredictor {
             ? Math.round((accurateCount / roundsAnalyzed) * 100) + '%'
             : '0%';
         document.getElementById('avgConfidence').textContent = avgConfidence + '%';
-    }
-
-    showLoadingState() {
-        document.getElementById('loadingState').classList.remove('hidden');
-        document.getElementById('predictionResult').classList.add('hidden');
-    }
-
-    hideLoadingState() {
-        document.getElementById('loadingState').classList.add('hidden');
     }
 
     saveHistoryToStorage() {
